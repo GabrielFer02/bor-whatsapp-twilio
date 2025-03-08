@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { sendWhatsappMessage } from "./services/twilio";
 import { getOpenAiCompletion } from "./services/openai";
+import { genAiGenerateText } from "./services/gemini";
 
 const app = express();
 
@@ -30,7 +31,8 @@ app.post("/chat/receive", async (req, res) => {
   const to = twilioRequestBody.From;
 
   try {
-    const completion = await getOpenAiCompletion(messageBody);
+    // const completion = await getOpenAiCompletion(messageBody);
+    const completion = await genAiGenerateText(messageBody);
     await sendWhatsappMessage(to, completion);
     res.status(200).json({ success: true, messageBody });
   } catch (error) {
