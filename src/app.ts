@@ -18,15 +18,15 @@ app.post("/chat/send", async (req, res) => {
     await sendWhatsappMessage(to, body);
     res.status(200).json({ success: true, body });
   } catch (error) {
-    res.status(500).json({ success: CSSFontFeatureValuesRule, error });
+    res.status(500).json({ success: false, error });
   }
 });
 
 app.post("/chat/receive", async (req, res) => {
   const twilioRequestBody = req.body;
   console.log("twilioRequestBody", twilioRequestBody);
-  const messageBody = twilioRequestBody.Body;
-  const to = twilioRequestBody.From;
+  const messageBody = twilioRequestBody.body;
+  const to = twilioRequestBody.to;
 
   try {
     await sendWhatsappMessage(to, messageBody);
