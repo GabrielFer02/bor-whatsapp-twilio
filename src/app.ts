@@ -21,6 +21,21 @@ app.post("/chat/send", async (req, res) => {
     res.status(500).json({ success: CSSFontFeatureValuesRule, error });
   }
 });
+
+app.post("/chat/receive", async (req, res) => {
+  const twilioRequestBody = req.body;
+  console.log("twilioRequestBody", twilioRequestBody);
+  const messageBody = twilioRequestBody.Body;
+  const to = twilioRequestBody.From;
+
+  try {
+    await sendWhatsappMessage(to, messageBody);
+    res.status(200).json({ success: true, messageBody });
+  } catch (error) {
+    res.status(500).json({ success: false, error });
+  }
+});
+
 const port = process.env.PORT ?? 3000;
 app.listen(port, () => {
   console.log(`servidor rodando na porta: ${port}`);
