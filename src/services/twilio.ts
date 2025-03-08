@@ -1,8 +1,11 @@
 import twilio from "twilio";
+import dotenv from "dotenv";
 
-const accountSid = "";
-const authToken = "";
-const wahtsappPhoneNumber = "";
+dotenv.config();
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const wahtsappPhoneNumber = process.env.WHATSAPP_PHONE_NUMBER;
 
 const client = twilio(accountSid, authToken);
 
@@ -12,8 +15,8 @@ export const sendWhatsappMessage = async (
 ): Promise<void> => {
   try {
     await client.messages.create({
-      to,
-      from: wahtsappPhoneNumber,
+      to: `whatsapp:${to}`,
+      from: `whatsapp:${wahtsappPhoneNumber}`,
       body,
     });
   } catch (error) {
