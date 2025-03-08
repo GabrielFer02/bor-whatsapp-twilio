@@ -15,8 +15,8 @@ export const sendWhatsappMessage = async (
 ): Promise<void> => {
   try {
     await client.messages.create({
-      to: `whatsapp:${to}`,
-      from: `whatsapp:${wahtsappPhoneNumber}`,
+      to,
+      from: wahtsappPhoneNumber,
       body,
     });
   } catch (error) {
